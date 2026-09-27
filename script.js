@@ -1,12 +1,13 @@
 const events=[
-["01","OCT 09","CAKESHOP","MITSU","LIGHTS","FAKE VIDEO GAME","START GAME"],
-["02","OCT 16","HENZ","0SIGGY","ITAEWON BOUNCE","FAKE MAGAZINE","OPEN ISSUE"],
-["03","OCT 23","SHELTER","VITALINE","GO!","FAKE CCTV / CAMERA","ACCESS CAMERA"],
-["04","OCT 30","LUKA","LIL CHERRY","BOULANGERIE","FAKE HORROR MOVIE","PLAY TAPE"],
-["05","NOV 06","FLAC","FEROZZLESS","4AM","FAKE TV SHOW","WATCH CH.05"],
-["06","NOV 13","UNDERCITY","BRYN, FRESH AIR","THANK U FOR BEING HERE","FAKE FIGHT / WRESTLING","ENTER THE RING"],
-["07","NOV 21","MING","NINEORZERO","IN2U","FAKE OLD KOREAN FLYER","입장하기"],
-["08","NOV 27","BOLERO","KIRIN","CINNAMON BABY","FAKE ADVERTISING","BUY NOW"]
+{n:"01",date:"OCT 09",place:"CAKESHOP",artist:"MITSU",track:"LIGHTS",media:"FLYER / VIDEO GAME",album:true},
+{n:"02",date:"OCT 16",place:"HENZ",artist:"0SIGGY",track:"ITAEWON BOUNCE",media:"FLYER / MAGAZINE",album:true},
+{n:"03",date:"OCT 23",place:"SHELTER",artist:"VITALINE",track:"GO!",media:"FLYER / CCTV",album:true},
+{n:"04",date:"OCT 30",place:"LUKA",artist:"LIL CHERRY",track:"BOULANGERIE",media:"FLYER / HORROR MOVIE",album:true},
+{n:"05",date:"NOV 06",place:"FLAC",artist:"FEROZZLESS",track:"4AM",media:"FLYER / TV SHOW",album:true},
+{n:"06",date:"NOV 13",place:"UNDERCITY",artist:"BRYN, FRESH AIR",track:"THANK U FOR BEING HERE",media:"FLYER / WRESTLING",album:true},
+{n:"07",date:"NOV 21",place:"MING",artist:"NINEORZERO",track:"IN2U",media:"FLYER / OLD KOREAN",album:true},
+{n:"08",date:"NOV 27",place:"BOLERO",artist:"KIRIN",track:"CINNAMON BABY",media:"FLYER / ADVERTISING",album:true},
+{n:"09",date:"TBA",place:"SEOUL COMMUNITY RADIO",artist:"BOO THE BAND",track:"HOODANTHEM",media:"FLYER / LOTTERY TICKET",album:true}
 ];
-document.querySelector("#blocks").innerHTML=Array.from({length:8},()=>"<i></i>").join("");
-document.querySelector("#events").innerHTML=events.map(e=>`<article class="event"><div class="event-top"><span>${e[0]}</span><span>${e[1]}</span></div><div class="photo placeholder"><i>${e[5]}<br>IMAGE SPACE</i></div><span class="tag">SEOUL</span><h2>${e[2]}</h2><p>+ ${e[3]}<br>+ ${e[4]}</p><button class="action" disabled>▣ &nbsp; LOCKED</button></article>`).join("");
+document.querySelector("#blocks").innerHTML=Array.from({length:9},()=>"<i></i>").join("");
+document.querySelector("#events").innerHTML=events.map(e=>`<article class="event"><div class="event-id">${e.n}<br>${e.date}</div><div class="media"><span>${e.media}</span></div><div class="info"><small>SEOUL / RELEASE</small><h2>${e.place}</h2><p>${e.artist}<br>${e.track}</p></div><button class="action" disabled>LOCKED</button></article>`).join("");
