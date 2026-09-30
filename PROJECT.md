@@ -171,3 +171,11 @@ The desired layout is now a **single vertical sequence of rectangular event rows
 ## Collaboration rule
 
 When a collaborator or a new ChatGPT session joins the project, **read this file first and inspect the current repository before proposing changes**. If a decision made in conversation changes this specification, update this file so GitHub remains the shared source of truth.
+
+## V1 implementation — September 30, 2026
+
+- Event configuration moved to `data.js`; `script.js` renders content and validated HTTPS actions.
+- Direct-ticket and external pre-save access modes supported per event. No pre-save validation is performed on the static site.
+- Real published tracks (`released: true`) control album progress.
+- Responsive timeline, flyer fallbacks, music/video links, keyboard focus and skip navigation implemented.
+- Final URLs and flyers are still required. This deliverable has not been pushed to GitHub or deployed.
