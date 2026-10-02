@@ -1,0 +1,200 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="robots" content="noindex">
+  <title>CAKESHOP Guest List — VERY.FAK3</title>
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      background: #080808;
+      color: #eee;
+      font-family: Arial, sans-serif;
+      line-height: 1.6;
+    }
+    main {
+      max-width: 540px;
+      margin: 40px auto;
+      padding: 24px;
+    }
+    a { color: #ee655d; }
+    h1 { font-size: 28px; }
+    .notice {
+      border: 1px solid #444;
+      padding: 16px;
+      margin: 24px 0;
+    }
+    label {
+      display: block;
+      margin-top: 20px;
+    }
+    input {
+      width: 100%;
+      margin-top: 6px;
+      padding: 14px;
+      border: 1px solid #555;
+      background: #151515;
+      color: #fff;
+      font: inherit;
+    }
+    button {
+      width: 100%;
+      margin-top: 28px;
+      padding: 16px;
+      background: #e1261c;
+      border: 0;
+      color: #fff;
+      font: inherit;
+      cursor: pointer;
+    }
+    input:focus-visible, button:focus-visible {
+      outline: 2px solid #ee655d;
+      outline-offset: 3px;
+    }
+    .trap {
+      position: absolute;
+      left: -10000px;
+    }
+    [hidden] { display: none !important; }
+  </style>
+</head>
+<body>
+  <main>
+    <a href="index.html">← Back / 돌아가기</a>
+    <p>VERY.FAK3 · OCT 09, 2026</p>
+    <h1>CAKESHOP GUEST LIST</h1>
+
+    <div class="notice" id="paid-info">
+      <strong>KRW 10,000 / 10,000원</strong>
+      <p>
+        Transfer KRW 10,000 before submitting this form.
+        Registration is confirmed after payment verification.
+      </p>
+      <p lang="ko">
+        신청 전 10,000원을 입금해 주세요.
+        입금 확인 후 등록이 확정됩니다.
+      </p>
+      <p>
+        Bank / 은행: <strong>KB</strong><br>
+        Account / 계좌번호: <strong>924501-01-406357</strong><br>
+      </p>
+    </div>
+
+    <div class="notice" id="free-info" hidden>
+      Complimentary guest list — invitation only.<br>
+      <span lang="ko">초대받은 분들을 위한 무료 게스트리스트입니다.</span>
+    </div>
+
+    <form
+      id="guest-form"
+      action="https://script.google.com/macros/s/AKfycbzJLrEXFli6a6iJ6w9u7DT0LzXpuekbWyhWHuP_edhrgIsgyXq1otlkyt4XOFBlHNmg/exec"
+      method="post"
+    >
+      <input type="hidden" name="type" id="list-type" value="PAID">
+
+      <label for="nom">
+        Full name for entry / 입장 시 확인할 성명
+      </label>
+      <input
+        id="nom"
+        name="nom"
+        autocomplete="name"
+        maxlength="100"
+        required
+      >
+
+      <label for="contact">
+        Instagram or phone number / 인스타그램 또는 전화번호
+      </label>
+      <input
+        id="contact"
+        name="contact"
+        maxlength="150"
+        required
+      >
+
+      <div id="transfer-field">
+        <label for="nomVirement">
+          Bank transfer sender’s name / 입금자명
+        </label>
+        <input
+          id="nomVirement"
+          name="nomVirement"
+          maxlength="100"
+          required
+        >
+      </div>
+
+      <div id="code-field" hidden>
+        <label for="code">
+          Invitation code / 초대 코드
+        </label>
+        <input
+          id="code"
+          name="code"
+          type="password"
+          autocomplete="off"
+          maxlength="200"
+          disabled
+        >
+      </div>
+
+      <div class="trap" aria-hidden="true">
+        <label for="website">Leave empty</label>
+        <input
+          id="website"
+          name="website"
+          tabindex="-1"
+          autocomplete="off"
+        >
+      </div>
+
+      <p>
+        Your details are used to manage this event’s guest list.
+        Your entry name will be shared with Cakeshop.<br>
+        <span lang="ko">
+          입력하신 정보는 이번 행사 게스트리스트 관리에 사용되며,
+          입장 확인을 위한 성명은 케이크샵에 전달됩니다.
+        </span>
+      </p>
+
+      <button type="submit">Submit / 신청하기</button>
+    </form>
+  </main>
+
+  <script>
+    const isFree =
+      new URLSearchParams(location.search).get("type") === "free";
+
+    if (isFree) {
+      document.querySelector("#list-type").value = "FREE";
+      document.querySelector("#paid-info").hidden = true;
+      document.querySelector("#free-info").hidden = false;
+
+      document.querySelector("#transfer-field").hidden = true;
+      document.querySelector("#nomVirement").required = false;
+      document.querySelector("#nomVirement").disabled = true;
+
+      document.querySelector("#code-field").hidden = false;
+      document.querySelector("#code").disabled = false;
+      document.querySelector("#code").required = true;
+    }
+
+    document.querySelector("#guest-form").addEventListener(
+      "submit",
+      function (event) {
+        const action = this.getAttribute("action");
+
+        if (!/^https:\/\/script\.google\.com\/macros\/s\/[^/]+\/exec$/.test(action)) {
+          event.preventDefault();
+          alert(
+            "Registration is not open yet. / 아직 신청이 시작되지 않았습니다."
+          );
+        }
+      }
+    );
+  </script>
+</body>
+</html>

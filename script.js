@@ -22,7 +22,7 @@ function actions(event) {
   const box = el('div', 'actions');
   const gated = event.accessMode === 'presave';
   const entries = [
-    [gated ? 'PRE-SAVE → ACCESS' : 'TICKETS / RSVP', gated ? event.presaveUrl : event.ticketUrl],
+    [gated ? 'PRE-SAVE → ACCESS' : (event.ticketLabel || 'TICKETS / RSVP'), gated ? event.presaveUrl : event.ticketUrl],
     ...(!gated && !event.released ? [['PRE-SAVE', event.presaveUrl]] : []),
     ['LISTEN', event.listenUrl], ['WATCH', event.watchUrl]
   ];
