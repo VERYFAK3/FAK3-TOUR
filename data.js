@@ -1,6 +1,6 @@
 // All URLs must be final public HTTPS links. For gated access, put the redirect in the external pre-save service.
 const tourEvents=[
-{n:"01",date:"OCT 09",place:"CAKESHOP",artist:"MITSU",track:"LIGHTS",media:"FLYER / VIDEO GAME",album:true,status:"locked",released:false,flyer:"",presaveUrl:"",ticketUrl:"https://veryfak3.github.io/FAK3-TOUR/guestlist.html",ticketLabel:"GUEST LIST · 10,000₩ / 게스트리스트 · 10,000원",listenUrl:"",watchUrl:"",accessMode:"direct"},
+{n:"01",date:"OCT 09",place:"CAKESHOP",artist:"MITSU",track:"LIGHTS",media:"FLYER / VIDEO GAME",album:true,status:"locked",released:false,flyer:"cakeshop.jpeg",presaveUrl:"",ticketUrl:"https://veryfak3.github.io/FAK3-TOUR/guestlist.html",ticketLabel:"GUEST LIST · 10,000₩ / 게스트리스트 · 10,000원",listenUrl:"",watchUrl:"",accessMode:"direct"},
 {n:"02",date:"OCT 16",place:"HENZ",artist:"0SIGGY",track:"ITAEWON BOUNCE",media:"FLYER / MAGAZINE",album:true,status:"locked",released:false,flyer:"",presaveUrl:"",ticketUrl:"",listenUrl:"",watchUrl:"",accessMode:"direct"},
 {n:"03",date:"OCT 23",place:"SHELTER",artist:"VITALINE",track:"GO!",media:"FLYER / CCTV",album:true,status:"locked",released:false,flyer:"",presaveUrl:"",ticketUrl:"",listenUrl:"",watchUrl:"",accessMode:"direct"},
 {n:"04",date:"OCT 30",place:"LUKA",artist:"NOZ",track:"BOULANGERIE",media:"FLYER / HORROR MOVIE",album:true,status:"locked",released:false,flyer:"",presaveUrl:"",ticketUrl:"",listenUrl:"",watchUrl:"",accessMode:"direct"},
