@@ -1,5 +1,5 @@
 // Liens publics HTTPS pour les boutons.
-// Les flyers utilisent des chemins locaux.
+// Les flyers utilisent des chemins locaux. oui
 const tourEvents = [
   {
     n: "01",
