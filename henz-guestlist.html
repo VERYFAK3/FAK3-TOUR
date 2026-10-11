@@ -1,0 +1,133 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="robots" content="noindex">
+  <title>HENZ Guest List — VERY.FAK3</title>
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      background: #080808;
+      color: #eee;
+      font-family: Arial, sans-serif;
+      line-height: 1.6;
+    }
+    main {
+      max-width: 540px;
+      margin: 40px auto;
+      padding: 24px;
+    }
+    a { color: #ee655d; }
+    h1 { font-size: 28px; }
+    .notice {
+      border: 1px solid #444;
+      padding: 16px;
+      margin: 24px 0;
+    }
+    label {
+      display: block;
+      margin-top: 20px;
+    }
+    input {
+      width: 100%;
+      margin-top: 6px;
+      padding: 14px;
+      border: 1px solid #555;
+      background: #151515;
+      color: #fff;
+      font: inherit;
+      font-size: 16px;
+    }
+    button {
+      width: 100%;
+      margin-top: 28px;
+      padding: 16px;
+      background: #e1261c;
+      border: 0;
+      color: #fff;
+      font: inherit;
+      cursor: pointer;
+    }
+    input:focus-visible, button:focus-visible {
+      outline: 2px solid #ee655d;
+      outline-offset: 3px;
+    }
+    .trap {
+      position: absolute;
+      left: -10000px;
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <a href="index.html">← Back / 돌아가기</a>
+    <p>VERY.FAK3 · OCT 16, 2026</p>
+    <h1>HENZ GUEST LIST</h1>
+
+    <div class="notice">
+      <strong>KRW 10,000 at the door / 현장 결제 10,000원</strong>
+      <p>
+        Register below. Give your registered name at the entrance
+        and pay KRW 10,000 at the door. No bank transfer is needed.
+      </p>
+      <p lang="ko">
+        아래 양식으로 신청해 주세요. 입구에서 등록한 성명을
+        말씀하시고 10,000원을 현장에서 결제해 주세요.
+        사전 계좌이체는 필요하지 않습니다.
+      </p>
+    </div>
+
+    <form
+      action="https://script.google.com/macros/s/AKfycbzJLrEXFli6a6iJ6w9u7DT0LzXpuekbWyhWHuP_edhrgIsgyXq1otlkyt4XOFBlHNmg/exec"
+      method="post"
+    >
+      <input type="hidden" name="event" value="HENZ">
+      <input type="hidden" name="type" value="DOOR">
+
+      <label for="nom">
+        Full name for entry / 입장 시 확인할 성명
+      </label>
+      <input
+        id="nom"
+        name="nom"
+        autocomplete="name"
+        maxlength="100"
+        required
+      >
+
+      <label for="contact">
+        Instagram or phone number / 인스타그램 또는 전화번호
+      </label>
+      <input
+        id="contact"
+        name="contact"
+        maxlength="150"
+        required
+      >
+
+      <div class="trap" aria-hidden="true">
+        <label for="website">Leave empty / 비워 두세요</label>
+        <input
+          id="website"
+          name="website"
+          tabindex="-1"
+          autocomplete="off"
+        >
+      </div>
+
+      <p>
+        Your details are used to manage this event’s guest list.
+        Your entry name will be shared with Henz.
+      </p>
+      <p lang="ko">
+        입력하신 정보는 이번 행사 게스트리스트 관리에 사용되며,
+        입장 확인을 위한 성명은 헨즈에 전달됩니다.
+      </p>
+
+      <button type="submit">Submit / 신청하기</button>
+    </form>
+  </main>
+</body>
+</html>
