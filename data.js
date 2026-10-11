@@ -28,7 +28,7 @@ const tourEvents = [
   album: true,
   status: "locked",
   released: false,
-  flyer: "",
+  flyer:"henz.jpeg"
   presaveUrl: "",
   ticketUrl: "https://veryfak3.github.io/FAK3-TOUR/henz-guestlist.html",
   ticketLabel: "GUEST LIST · 10,000₩ AT THE DOOR / 현장 결제 10,000원",
