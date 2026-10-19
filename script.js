@@ -21,14 +21,48 @@ function link(label, value) {
 function actions(event) {
   const box = el('div', 'actions');
   const gated = event.accessMode === 'presave';
+
   const entries = [
-    [gated ? 'PRE-SAVE → ACCESS' : (event.ticketLabel || 'TICKETS / RSVP'), gated ? event.presaveUrl : event.ticketUrl],
-    ...(!gated && !event.released ? [['PRE-SAVE', event.presaveUrl]] : []),
-    ['LISTEN', event.listenUrl], ['WATCH', event.watchUrl]
+    [
+      gated
+        ? 'PRE-SAVE → ACCESS'
+        : (event.ticketLabel || 'TICKETS / RSVP'),
+      gated ? event.presaveUrl : event.ticketUrl
+    ],
+    ...(!gated && !event.released
+      ? [['PRE-SAVE', event.presaveUrl]]
+      : []),
+    ['LISTEN', event.listenUrl],
+    ['AFTERMOVIE', event.watchUrl]
   ];
-  entries.forEach(([label, url]) => { const a = link(label, url); if (a) box.append(a); });
-  if (!box.children.length) box.append(el('span', 'unavailable', event.status === 'archived' ? 'ARCHIVE COMING SOON' : 'COMING SOON'));
-  if (gated && safeUrl(event.presaveUrl)) box.append(el('small', 'access-note', 'Pre-save on the next page to access RSVP.'));
+
+  entries.forEach(([label, url]) => {
+    const a = link(label, url);
+    if (a) box.append(a);
+  });
+
+  if (!box.children.length) {
+    box.append(
+      el(
+        'span',
+        'unavailable',
+        event.status === 'archived'
+          ? 'ARCHIVE COMING SOON'
+          : 'COMING SOON'
+      )
+    );
+  }
+
+  if (gated && safeUrl(event.presaveUrl)) {
+    box.append(
+      el(
+        'small',
+        'access-note',
+        'Pre-save on the next page to access RSVP.'
+      )
+    );
+  }
+
   return box;
 }
 function renderEvent(event, index, extra = false) {
