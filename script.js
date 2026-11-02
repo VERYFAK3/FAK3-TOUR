@@ -40,6 +40,11 @@ function link(label, value, primary = false) {
 
 function actions(event) {
   const box = el('div', 'actions');
+  if (event.accessNotice && !safeUrl(event.ticketUrl)) {
+  box.append(
+    el('span', 'action access-notice', event.accessNotice)
+  );
+}
   const gated = event.accessMode === 'presave';
 
   const entries = [
