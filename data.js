@@ -103,8 +103,9 @@ const tourEvents = [
     released: false,
     flyer: "undercity.jpeg",
     presaveUrl: "",
-    ticketUrl: "https://undercityculture.com/",
-    ticketLabel: "TICKETS / 예매",
+    ticketUrl: "https://undercityculture.com/product/detail.html?product_no=35&cate_no=1&display_group=2",
+    ticketLabel: "TICKETS · UNDERCITY (KOREAN CARD ONLY)",
+    raUrl: "https://fr.ra.co/events/2577978",
     listenUrl: "",
     watchUrl: "",
     accessMode: "direct"
