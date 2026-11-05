@@ -59,6 +59,7 @@ function actions(event) {
       ? [['PRE-SAVE', event.presaveUrl, false]]
       : []),
     ['LISTEN RELEASE', event.listenUrl, false],
+    ['TICKETS · RESIDENT ADVISOR (IF NO KOREAN CARD)', event.raUrl, true],
     ['AFTERMOVIE', event.watchUrl, false]
   ];
 
