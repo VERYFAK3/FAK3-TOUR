@@ -101,9 +101,10 @@ const tourEvents = [
     album: true,
     status: "locked",
     released: false,
-    flyer: "",
+    flyer: "undercity.jpeg",
     presaveUrl: "",
-    ticketUrl: "",
+    ticketUrl: "https://undercityculture.com/",
+    ticketLabel: "TICKETS / 예매",
     listenUrl: "",
     watchUrl: "",
     accessMode: "direct"
