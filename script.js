@@ -168,7 +168,7 @@ function renderEvent(event, index, extra = false) {
     el(
       'p',
       'track',
-      extra ? event.track : 'RELEASE: ' + event.track
+      event.track ? (extra ? event.track : 'RELEASE: ' + event.track) : ''
     )
   );
 
@@ -178,38 +178,30 @@ function renderEvent(event, index, extra = false) {
 }
 
 function renderSite() {
-  const released = tourEvents.filter(
-    event => event.released === true
-  ).length;
+  const singles = tourEvents.filter(event => event.album === true);
+  const released = singles.filter(event => event.released === true).length;
 
   const count = document.querySelector('#count');
-  if (count) {
-    count.textContent = released + ' / ' + tourEvents.length;
-  }
+  if (count) count.textContent = `${released} / ${singles.length}`;
 
   const blocks = document.querySelector('#blocks');
-
   if (blocks) {
-    blocks.setAttribute('aria-valuemax', String(tourEvents.length));
+    blocks.setAttribute('aria-valuemax', String(singles.length));
     blocks.setAttribute('aria-valuenow', String(released));
-    blocks.style.gridTemplateColumns =
-      `repeat(${tourEvents.length}, 1fr)`;
-
+    blocks.style.gridTemplateColumns = `repeat(${singles.length}, 1fr)`;
     blocks.replaceChildren(
-      ...tourEvents.map(event =>
-        el('i', event.released ? 'on' : '')
-      )
+      ...singles.map(event => el('i', event.released ? 'on' : ''))
     );
   }
 
   const albumLabel = document.querySelector('#album-label');
-
   if (albumLabel) {
     albumLabel.textContent =
-      tourEvents.length > 0 && released === tourEvents.length
+      singles.length > 0 && released === singles.length
         ? 'ALBUM LOADED'
         : 'ALBUM LOADING';
   }
+
 
   const albumContainer = document.querySelector('#album-link');
 
