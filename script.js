@@ -15,14 +15,20 @@ function safeUrl(value) {
 function el(tag, className, content) {
   const node = document.createElement(tag);
 
-  if (className) node.className = className;
-  if (content !== undefined) node.textContent = content;
+  if (className) {
+    node.className = className;
+  }
+
+  if (content !== undefined) {
+    node.textContent = content;
+  }
 
   return node;
 }
 
 function link(label, value, primary = false) {
   const url = safeUrl(value);
+
   if (!url) return null;
 
   const a = el(
@@ -40,47 +46,78 @@ function link(label, value, primary = false) {
 
 function actions(event) {
   const box = el('div', 'actions');
-  if (event.accessNotice && !safeUrl(event.ticketUrl)) {
-  box.append(
-    el('span', 'action access-notice', event.accessNotice)
-  );
-}
+  const archived = event.status === 'archived';
   const gated = event.accessMode === 'presave';
 
-  const entries = [
-    [
-      gated
-        ? 'PRE-SAVE → ACCESS'
-        : (event.ticketLabel || 'TICKETS / RSVP'),
-      gated ? event.presaveUrl : event.ticketUrl,
-      true
-    ],
-    ...(!gated && !event.released
-      ? [['PRE-SAVE', event.presaveUrl, false]]
-      : []),
-    ['LISTEN RELEASE', event.listenUrl, false],
-    ['TICKETS · RESIDENT ADVISOR (IF NO KOREAN CARD)', event.raUrl, true],
-    ['AFTERMOVIE', event.watchUrl, false]
-  ];
+  // Les soirées archivées ne proposent plus de billetterie.
+  if (!archived) {
+    const accessUrl = gated
+      ? event.presaveUrl
+      : event.ticketUrl;
 
-  entries.forEach(([label, url, primary]) => {
-    const a = link(label, url, primary);
-    if (a) box.append(a);
-  });
+    const accessLabel = gated
+      ? 'PRE-SAVE → ACCESS'
+      : (event.ticketLabel || 'TICKETS / RSVP');
+
+    const accessLink = link(accessLabel, accessUrl, true);
+
+    if (accessLink) {
+      box.append(accessLink);
+    }
+
+    if (event.accessNotice && !safeUrl(accessUrl)) {
+      box.append(
+        el('span', 'action access-notice', event.accessNotice)
+      );
+    }
+
+    if (event.guestCodeNotice) {
+      box.append(
+        el('span', 'action access-notice', event.guestCodeNotice)
+      );
+    }
+
+    if (!gated && !event.released) {
+      const presaveLink = link('PRE-SAVE', event.presaveUrl);
+
+      if (presaveLink) {
+        box.append(presaveLink);
+      }
+    }
+
+    const raLink = link(
+      'TICKETS · RESIDENT ADVISOR (IF NO KOREAN CARD)',
+      event.raUrl,
+      true
+    );
+
+    if (raLink) {
+      box.append(raLink);
+    }
+  }
+
+  const listenLink = link('LISTEN RELEASE', event.listenUrl);
+  const aftermovieLink = link('AFTERMOVIE', event.watchUrl);
+
+  if (listenLink) {
+    box.append(listenLink);
+  }
+
+  if (aftermovieLink) {
+    box.append(aftermovieLink);
+  }
 
   if (!box.children.length) {
     box.append(
       el(
         'span',
         'unavailable',
-        event.status === 'archived'
-          ? 'ARCHIVE COMING SOON'
-          : 'COMING SOON'
+        archived ? 'ARCHIVE COMING SOON' : 'COMING SOON'
       )
     );
   }
 
-  if (gated && safeUrl(event.presaveUrl)) {
+  if (!archived && gated && safeUrl(event.presaveUrl)) {
     box.append(
       el(
         'small',
@@ -95,6 +132,7 @@ function actions(event) {
 
 function renderEvent(event, index, extra = false) {
   const row = el('article', 'event');
+
   row.id = extra ? event.id : 'event-' + event.n;
 
   const id = el('div', 'event-id');
@@ -113,7 +151,7 @@ function renderEvent(event, index, extra = false) {
   // Accepte uniquement les chemins locaux d’images.
   const validFlyer =
     typeof event.flyer === 'string' &&
-    /^(?:assets\/)?[a-zA-Z0-9_./-]+\.(png|jpe?g|webp)$/i.test(event.flyer) &&
+    /^[a-zA-Z0-9_./-]+\.(png|jpe?g|webp)$/i.test(event.flyer) &&
     !event.flyer.startsWith('/') &&
     !event.flyer.includes('..');
 
@@ -136,18 +174,24 @@ function renderEvent(event, index, extra = false) {
 
     media.append(img);
   } else {
-    media.append(el('span', '', 'FLYER COMING SOON'));
+    media.append(
+      el('span', '', 'FLYER COMING SOON')
+    );
   }
 
   const info = el('div', 'info');
-
-  const hasAccess = safeUrl(
-    event.accessMode === 'presave'
-      ? event.presaveUrl
-      : event.ticketUrl
-  );
-
   const archived = event.status === 'archived';
+
+  const hasAccess =
+    !archived &&
+    (
+      safeUrl(
+        event.accessMode === 'presave'
+          ? event.presaveUrl
+          : event.ticketUrl
+      ) ||
+      safeUrl(event.raUrl)
+    );
 
   const state = archived
     ? 'ARCHIVED'
@@ -160,64 +204,130 @@ function renderEvent(event, index, extra = false) {
   info.append(
     el(
       'small',
-      hasAccess && !archived ? 'status open' : 'status',
+      hasAccess ? 'status open' : 'status',
       state
     ),
+<<<<<<< HEAD
+    el('h3', '', event.place)
+=======
     el('h3', '', event.place),
     el('p', 'artist', event.artist),
     el(
       'p',
       'track',
-      extra ? event.track : 'RELEASE: ' + event.track
+      event.track ? (extra ? event.track : 'RELEASE: ' + event.track) : ''
     )
+>>>>>>> e66739f6c16dd0459850c4586968116fc2409e72
   );
 
-  row.append(id, media, info, actions(event));
+  if (event.artist) {
+    info.append(
+      el('p', 'artist', event.artist)
+    );
+  }
+
+  if (event.track) {
+    const trackText =
+      extra || event.album === false
+        ? event.track
+        : 'RELEASE: ' + event.track;
+
+    info.append(
+      el('p', 'track', trackText)
+    );
+  }
+
+  row.append(
+    id,
+    media,
+    info,
+    actions(event)
+  );
 
   return row;
 }
 
 function renderSite() {
-  const released = tourEvents.filter(
+<<<<<<< HEAD
+  // Compte uniquement les singles, pas les autres événements.
+  const singles = tourEvents.filter(
+    event => event.album === true
+  );
+
+  const released = singles.filter(
     event => event.released === true
   ).length;
 
   const count = document.querySelector('#count');
+
   if (count) {
-    count.textContent = released + ' / ' + tourEvents.length;
+    count.textContent = `${released} / ${singles.length}`;
   }
+=======
+  const singles = tourEvents.filter(event => event.album === true);
+  const released = singles.filter(event => event.released === true).length;
+
+  const count = document.querySelector('#count');
+  if (count) count.textContent = `${released} / ${singles.length}`;
+>>>>>>> e66739f6c16dd0459850c4586968116fc2409e72
 
   const blocks = document.querySelector('#blocks');
-
   if (blocks) {
-    blocks.setAttribute('aria-valuemax', String(tourEvents.length));
-    blocks.setAttribute('aria-valuenow', String(released));
+<<<<<<< HEAD
+    blocks.setAttribute(
+      'aria-valuemax',
+      String(singles.length)
+    );
+
+    blocks.setAttribute(
+      'aria-valuenow',
+      String(released)
+    );
+
     blocks.style.gridTemplateColumns =
-      `repeat(${tourEvents.length}, 1fr)`;
+      `repeat(${Math.max(singles.length, 1)}, 1fr)`;
 
     blocks.replaceChildren(
-      ...tourEvents.map(event =>
+      ...singles.map(event =>
         el('i', event.released ? 'on' : '')
       )
+=======
+    blocks.setAttribute('aria-valuemax', String(singles.length));
+    blocks.setAttribute('aria-valuenow', String(released));
+    blocks.style.gridTemplateColumns = `repeat(${singles.length}, 1fr)`;
+    blocks.replaceChildren(
+      ...singles.map(event => el('i', event.released ? 'on' : ''))
+>>>>>>> e66739f6c16dd0459850c4586968116fc2409e72
     );
   }
 
   const albumLabel = document.querySelector('#album-label');
-
   if (albumLabel) {
     albumLabel.textContent =
-      tourEvents.length > 0 && released === tourEvents.length
+      singles.length > 0 && released === singles.length
+<<<<<<< HEAD
+        ? 'ALL SINGLES RELEASED'
+        : 'SINGLES LOADING';
+=======
         ? 'ALBUM LOADED'
         : 'ALBUM LOADING';
+>>>>>>> e66739f6c16dd0459850c4586968116fc2409e72
   }
+
 
   const albumContainer = document.querySelector('#album-link');
 
   if (albumContainer) {
-    const albumLink = link('LISTEN TO THE ALBUM', albumUrl);
+    const albumLink = link(
+      'LISTEN TO THE ALBUM',
+      albumUrl
+    );
+
     albumContainer.replaceChildren();
 
-    if (albumLink) albumContainer.append(albumLink);
+    if (albumLink) {
+      albumContainer.append(albumLink);
+    }
   }
 
   const events = document.querySelector('#events');
@@ -242,9 +352,11 @@ function renderSite() {
 }
 
 if (document.readyState === 'loading') {
-  document.addEventListener('DOMContentLoaded', renderSite, {
-    once: true
-  });
+  document.addEventListener(
+    'DOMContentLoaded',
+    renderSite,
+    { once: true }
+  );
 } else {
   renderSite();
 }
