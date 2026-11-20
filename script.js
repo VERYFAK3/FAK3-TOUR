@@ -1,6 +1,5 @@
 'use strict';
 
-// Autorise uniquement les liens HTTPS.
 function safeUrl(value) {
   if (!value) return null;
 
@@ -15,20 +14,14 @@ function safeUrl(value) {
 function el(tag, className, content) {
   const node = document.createElement(tag);
 
-  if (className) {
-    node.className = className;
-  }
-
-  if (content !== undefined) {
-    node.textContent = content;
-  }
+  if (className) node.className = className;
+  if (content !== undefined) node.textContent = content;
 
   return node;
 }
 
 function link(label, value, primary = false) {
   const url = safeUrl(value);
-
   if (!url) return null;
 
   const a = el(
@@ -49,21 +42,14 @@ function actions(event) {
   const archived = event.status === 'archived';
   const gated = event.accessMode === 'presave';
 
-  // Les soirées archivées ne proposent plus de billetterie.
   if (!archived) {
-    const accessUrl = gated
-      ? event.presaveUrl
-      : event.ticketUrl;
-
+    const accessUrl = gated ? event.presaveUrl : event.ticketUrl;
     const accessLabel = gated
       ? 'PRE-SAVE → ACCESS'
       : (event.ticketLabel || 'TICKETS / RSVP');
 
     const accessLink = link(accessLabel, accessUrl, true);
-
-    if (accessLink) {
-      box.append(accessLink);
-    }
+    if (accessLink) box.append(accessLink);
 
     if (event.accessNotice && !safeUrl(accessUrl)) {
       box.append(
@@ -79,10 +65,7 @@ function actions(event) {
 
     if (!gated && !event.released) {
       const presaveLink = link('PRE-SAVE', event.presaveUrl);
-
-      if (presaveLink) {
-        box.append(presaveLink);
-      }
+      if (presaveLink) box.append(presaveLink);
     }
 
     const raLink = link(
@@ -91,21 +74,14 @@ function actions(event) {
       true
     );
 
-    if (raLink) {
-      box.append(raLink);
-    }
+    if (raLink) box.append(raLink);
   }
 
   const listenLink = link('LISTEN RELEASE', event.listenUrl);
   const aftermovieLink = link('AFTERMOVIE', event.watchUrl);
 
-  if (listenLink) {
-    box.append(listenLink);
-  }
-
-  if (aftermovieLink) {
-    box.append(aftermovieLink);
-  }
+  if (listenLink) box.append(listenLink);
+  if (aftermovieLink) box.append(aftermovieLink);
 
   if (!box.children.length) {
     box.append(
@@ -132,7 +108,6 @@ function actions(event) {
 
 function renderEvent(event, index, extra = false) {
   const row = el('article', 'event');
-
   row.id = extra ? event.id : 'event-' + event.n;
 
   const id = el('div', 'event-id');
@@ -148,7 +123,6 @@ function renderEvent(event, index, extra = false) {
 
   const media = el('div', 'media');
 
-  // Accepte uniquement les chemins locaux d’images.
   const validFlyer =
     typeof event.flyer === 'string' &&
     /^[a-zA-Z0-9_./-]+\.(png|jpe?g|webp)$/i.test(event.flyer) &&
@@ -174,9 +148,7 @@ function renderEvent(event, index, extra = false) {
 
     media.append(img);
   } else {
-    media.append(
-      el('span', '', 'FLYER COMING SOON')
-    );
+    media.append(el('span', '', 'FLYER COMING SOON'));
   }
 
   const info = el('div', 'info');
@@ -184,13 +156,12 @@ function renderEvent(event, index, extra = false) {
 
   const hasAccess =
     !archived &&
-    (
+    Boolean(
       safeUrl(
         event.accessMode === 'presave'
           ? event.presaveUrl
           : event.ticketUrl
-      ) ||
-      safeUrl(event.raUrl)
+      ) || safeUrl(event.raUrl)
     );
 
   const state = archived
@@ -202,28 +173,12 @@ function renderEvent(event, index, extra = false) {
         : 'UPCOMING';
 
   info.append(
-    el(
-      'small',
-      hasAccess ? 'status open' : 'status',
-      state
-    ),
-<<<<<<< HEAD
+    el('small', hasAccess ? 'status open' : 'status', state),
     el('h3', '', event.place)
-=======
-    el('h3', '', event.place),
-    el('p', 'artist', event.artist),
-    el(
-      'p',
-      'track',
-      event.track ? (extra ? event.track : 'RELEASE: ' + event.track) : ''
-    )
->>>>>>> e66739f6c16dd0459850c4586968116fc2409e72
   );
 
   if (event.artist) {
-    info.append(
-      el('p', 'artist', event.artist)
-    );
+    info.append(el('p', 'artist', event.artist));
   }
 
   if (event.track) {
@@ -232,24 +187,15 @@ function renderEvent(event, index, extra = false) {
         ? event.track
         : 'RELEASE: ' + event.track;
 
-    info.append(
-      el('p', 'track', trackText)
-    );
+    info.append(el('p', 'track', trackText));
   }
 
-  row.append(
-    id,
-    media,
-    info,
-    actions(event)
-  );
+  row.append(id, media, info, actions(event));
 
   return row;
 }
 
 function renderSite() {
-<<<<<<< HEAD
-  // Compte uniquement les singles, pas les autres événements.
   const singles = tourEvents.filter(
     event => event.album === true
   );
@@ -263,26 +209,12 @@ function renderSite() {
   if (count) {
     count.textContent = `${released} / ${singles.length}`;
   }
-=======
-  const singles = tourEvents.filter(event => event.album === true);
-  const released = singles.filter(event => event.released === true).length;
-
-  const count = document.querySelector('#count');
-  if (count) count.textContent = `${released} / ${singles.length}`;
->>>>>>> e66739f6c16dd0459850c4586968116fc2409e72
 
   const blocks = document.querySelector('#blocks');
-  if (blocks) {
-<<<<<<< HEAD
-    blocks.setAttribute(
-      'aria-valuemax',
-      String(singles.length)
-    );
 
-    blocks.setAttribute(
-      'aria-valuenow',
-      String(released)
-    );
+  if (blocks) {
+    blocks.setAttribute('aria-valuemax', String(singles.length));
+    blocks.setAttribute('aria-valuenow', String(released));
 
     blocks.style.gridTemplateColumns =
       `repeat(${Math.max(singles.length, 1)}, 1fr)`;
@@ -291,43 +223,25 @@ function renderSite() {
       ...singles.map(event =>
         el('i', event.released ? 'on' : '')
       )
-=======
-    blocks.setAttribute('aria-valuemax', String(singles.length));
-    blocks.setAttribute('aria-valuenow', String(released));
-    blocks.style.gridTemplateColumns = `repeat(${singles.length}, 1fr)`;
-    blocks.replaceChildren(
-      ...singles.map(event => el('i', event.released ? 'on' : ''))
->>>>>>> e66739f6c16dd0459850c4586968116fc2409e72
     );
   }
 
   const albumLabel = document.querySelector('#album-label');
+
   if (albumLabel) {
     albumLabel.textContent =
       singles.length > 0 && released === singles.length
-<<<<<<< HEAD
         ? 'ALL SINGLES RELEASED'
         : 'SINGLES LOADING';
-=======
-        ? 'ALBUM LOADED'
-        : 'ALBUM LOADING';
->>>>>>> e66739f6c16dd0459850c4586968116fc2409e72
   }
-
 
   const albumContainer = document.querySelector('#album-link');
 
   if (albumContainer) {
-    const albumLink = link(
-      'LISTEN TO THE ALBUM',
-      albumUrl
-    );
+    const albumLink = link('LISTEN TO THE ALBUM', albumUrl);
 
     albumContainer.replaceChildren();
-
-    if (albumLink) {
-      albumContainer.append(albumLink);
-    }
+    if (albumLink) albumContainer.append(albumLink);
   }
 
   const events = document.querySelector('#events');
@@ -352,11 +266,9 @@ function renderSite() {
 }
 
 if (document.readyState === 'loading') {
-  document.addEventListener(
-    'DOMContentLoaded',
-    renderSite,
-    { once: true }
-  );
+  document.addEventListener('DOMContentLoaded', renderSite, {
+    once: true
+  });
 } else {
   renderSite();
 }

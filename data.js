@@ -79,11 +79,7 @@ const tourEvents = [
     track: "PARTY LIKE THIS",
     media: "FLYER / TV SHOW",
     album: true,
-<<<<<<< HEAD
     status: "archived",
-=======
-    status: "locked",
->>>>>>> e66739f6c16dd0459850c4586968116fc2409e72
     released: true,
     flyer: "flac.jpeg",
     presaveUrl: "",
@@ -115,7 +111,7 @@ const tourEvents = [
     date: "NOV 14",
     place: "SEOUL COMMUNITY RADIO",
     artist: "FAK3 & FRIENDS",
-    track: "OFFICIAL AFTERPARTY · 19:00–00:00",
+    track: "OFFICIAL AFTERPARTY",
     media: "FLYER / RADIO",
     album: false,
     status: "archived",
@@ -129,21 +125,12 @@ const tourEvents = [
   },
   {
     n: "08",
-<<<<<<< HEAD
     date: "NOV 20",
     place: "MING",
     artist: "NINEORZERO",
     track: "LAW OF ATTRACTION",
     media: "FLYER / RAW STYLE",
     album: true,
-=======
-    date: "NOV 27",
-    place: "BOLERO",
-    artist: "ALBUM RELEASE",
-    track: "",
-    media: "FLYER / ROADMAP",
-    album: false,
->>>>>>> e66739f6c16dd0459850c4586968116fc2409e72
     status: "locked",
     released: true,
     flyer: "ming.jpeg",
@@ -155,19 +142,11 @@ const tourEvents = [
   },
   {
     n: "09",
-<<<<<<< HEAD
     date: "NOV 26",
     place: "BOLERO",
     artist: "ALBUM RELEASE",
     track: "FULL ALBUM LIVE SHOWCASE",
     media: "FLYER / ADVERTISING",
-=======
-    date: "TBA",
-    place: "SEOUL COMMUNITY RADIO",
-    artist: "ALL NIGHT LONG BROADCAST WITH GUESTS",
-    track: "",
-    media: "FLYER / LOTTERY TICKET",
->>>>>>> e66739f6c16dd0459850c4586968116fc2409e72
     album: false,
     status: "locked",
     released: false,
